@@ -1,3 +1,4 @@
+
 TrainingGeno <- pullSegSiteGeno(F2)
 TrainingPheno <- pheno(F2)
 
@@ -21,11 +22,17 @@ control <- trainControl(method='repeatedcv',
 
 ##build model##
 print("training model")
+
+cl <- startMPIcluster(count=16, verbose=TRUE)
+registerDoMPI(cl)
+
 rf_fit = train(ID1 ~ ., 
                data = trainingset, 
-               method = "rf",
+               method = "parRF",
                tuneLength = 10,
                trControl=control) ## search a random tuning grid ##
 print("model trained")
+
+closeCluster(cl)
 
 ### This command takes about 90 minutes in an compute canada interactive session ###

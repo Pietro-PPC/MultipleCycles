@@ -8,6 +8,7 @@ library(ranger)
 library(tidyverse)
 library(e1071)
 library(randomForest)
+library(doMPI)
 
 #Create Results Matrices
 
