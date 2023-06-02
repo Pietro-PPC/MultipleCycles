@@ -2,7 +2,7 @@
 ## define variables ##
 
 nModels = 7
-nReps = 15
+nReps = 1
 nGen = 10
 nVar = 9
 
@@ -34,7 +34,7 @@ bv_ebvC3 <- vector("list", length = nReps)
 
 i = 1
 repeat{
-  source("1CycleOne_rrblup.R") ##Source the SCript for the SCenario you would like to run##
+  source("1CycleOneRF.R") ##Source the SCript for the SCenario you would like to run##
   
   
   geneticvaluesC1[,i] <- gvMatC1
