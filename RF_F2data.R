@@ -23,7 +23,7 @@ control <- trainControl(method='repeatedcv',
 ##build model##
 print("training model")
 
-cl <- startMPIcluster(count=16, verbose=TRUE)
+cl <- startMPIcluster(count=15, verbose=TRUE)
 registerDoMPI(cl)
 
 rf_fit = train(ID1 ~ ., 
