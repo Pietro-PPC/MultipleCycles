@@ -24,11 +24,12 @@ control <- trainControl(method='repeatedcv',
                         search = "random")  
 
 ##build model##
-
+print("training model")
 rf_fit = train(ID1 ~ ., 
                data = trainingset, 
                method = "rf",
                tuneLength = 10,
                trControl=control) ## search a random tuning grid ##
+print("model trained")
 
 ### This command takes about 90 minutes in an compute canada interactive session ###

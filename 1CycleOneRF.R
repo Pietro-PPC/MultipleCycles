@@ -42,6 +42,7 @@ F2 = self(F1)
 F2 = setPheno(F2)
 
 source("RF_F2data.R")
+print("ran RF_F2data.R C1_1")
 
 ##set EBV using RF model##
 M = as.data.frame(pullSegSiteGeno(F2))
@@ -80,6 +81,7 @@ varMatC1[4,] = varG(F2)
 gvMatC1[4,] <- mean(gv(F2))
 
 source("RF_F2data.R")
+print("ran RF_F2data.R C1_2")
 
 allelesMatF2 <- pullSegSiteHaplo(F2)
 Gen <- as.data.frame(rep("F2", times=nInd(F2)))

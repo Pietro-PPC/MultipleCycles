@@ -25,6 +25,7 @@ colnames(Gen) <- "Gen"
 allelesMatF2 <- cbind(Gen, allelesMatF2)
 
 source("RF_F2data.R")
+print("ran RF_F2data.R C2")
 
 M = as.data.frame(pullSegSiteGeno(F2))
 colnames(M) <- paste("ID",2:(ncol(M)+1),sep="")
