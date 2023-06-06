@@ -11,19 +11,19 @@ library(randomForest)
 
 ## Declare functions
 
-setEbvRf <- function(popList, EBV, pop_name, corMatC1, corMat_ind){
+setEbvRf <- function(popList, EBV, pop_name, corMat, corMat_ind){
     # Sets EBV for cycles that use Random Forest
     ## popList is a list of populations be F2, F3, ...
     ## EBV is a list of EBVs
     ## pop_name can be "F2", "F3", ...
-    ## corMatC1 is a list with one matrix $m
+    ## corMat is a list with one matrix $m
     ## corMat_ind can be 2, 3, ...
     M = as.data.frame(pullSegSiteGeno(popList[[pop_name]]))
     colnames(M) <- paste("ID",2:(ncol(M)+1),sep="")
     EBV[[pop_name]] <- as.numeric(predict(rf_fit, M)) # rf_fit is the result from random forest
 
     popList[[pop_name]]@ebv <- as.matrix(EBV[[pop_name]])
-    corMatC1$m[corMat_ind,] = cor(bv(popList[[pop_name]]), ebv(popList[[pop_name]]))
+    corMat$m[corMat_ind,] = cor(bv(popList[[pop_name]]), ebv(popList[[pop_name]]))
 }
 
 #Variables used inside functions
