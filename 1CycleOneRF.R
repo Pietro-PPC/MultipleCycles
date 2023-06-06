@@ -9,28 +9,33 @@ library(tidyverse)
 library(e1071)
 library(randomForest)
 
-setEbvRf <- function(popList, EBV, pop_name, corMat_ind){
-    # Sets EBV for cycles using Random Forest
+## Declare functions
+
+setEbvRf <- function(popList, EBV, pop_name, corMatC1, corMat_ind){
+    # Sets EBV for cycles that use Random Forest
     ## popList is a list of populations be F2, F3, ...
     ## EBV is a list of EBVs
     ## pop_name can be "F2", "F3", ...
+    ## corMatC1 is a list with one matrix $m
     ## corMat_ind can be 2, 3, ...
     M = as.data.frame(pullSegSiteGeno(popList[[pop_name]]))
     colnames(M) <- paste("ID",2:(ncol(M)+1),sep="")
-    EBV[[pop_name]] <- as.numeric(predict(rf_fit, M))
+    EBV[[pop_name]] <- as.numeric(predict(rf_fit, M)) # rf_fit is the result from random forest
 
     popList[[pop_name]]@ebv <- as.matrix(EBV[[pop_name]])
-    corMatC1[corMat_ind,] = cor(bv(popList[[pop_name]]), ebv(popList[[pop_name]]))
+    corMatC1$m[corMat_ind,] = cor(bv(popList[[pop_name]]), ebv(popList[[pop_name]]))
 }
 
-#Create Results Matrices
-
-gvMatC1 <- matrix(nrow=10, ncol=1)
-corMatC1 <- matrix(nrow=7, ncol=1)
-varMatC1 <- matrix(nrow=9, ncol=1)
-
+#Variables used inside functions
 popList <- listenv::listenv()
 EBV <- listenv::listenv()
+corMatC1 <- listenv::listenv()
+
+#Create Results Matrices
+gvMatC1 <- matrix(nrow=10, ncol=1)
+corMatC1$m <- matrix(nrow=7, ncol=1)
+varMatC1 <- matrix(nrow=9, ncol=1)
+
 
 #establish simulation parameters
 genMap <- readRDS("genMapSNPs.RData")
@@ -62,12 +67,7 @@ source("RF_F2data.R")
 print("ran RF_F2data.R C1_1")
 
 ##set EBV using RF model##
-M = as.data.frame(pullSegSiteGeno(popList[["F2"]]))
-colnames(M) <- paste("ID",2:(ncol(M)+1),sep="")
-EBVF2 <- as.numeric(predict(rf_fit, M))
-
-popList[["F2"]]@ebv <- as.matrix(EBVF2)
-corMatC1[1,] = cor(bv(popList[["F2"]]), ebv(popList[["F2"]]))
+setEbvRf(popList, EBV, "F2", corMatC1, 1)
 
 newParents = selectInd(popList[["F2"]], 10, use="ebv", top=TRUE)
 varMatC1[2,] = varG(newParents)
@@ -106,7 +106,7 @@ colnames(Gen) <- "Gen"
 allelesMatF2 <- cbind(Gen, allelesMatF2)
 
 ##set EBV using RF model##
-setEbvRf(pop, EBV, "F2", 2)
+setEbvRf(popList, EBV, "F2", corMatC1, 2)
 
 SelectParents = source("SelectParentsF2.R")
 
@@ -127,7 +127,7 @@ allelesMatF3 <- cbind(Gen, allelesMatF3)
 
 
 ##set EBV using RF model##
-setEbvRf(pop, EBV, "F3", 3)
+setEbvRf(popList, EBV, "F3", corMatC1, 3)
 
 ##select top within familiy from popList[["F3"]] to form popList[["F4"]] ##
 
@@ -145,7 +145,7 @@ colnames(Gen) <- "Gen"
 allelesMatF4 <- cbind(Gen, allelesMatF4)
 
 ##set EBV using RF model##
-setEbvRf(pop, EBV, "F4", 4)
+setEbvRf(popList, EBV, "F4", corMatC1, 4)
 
 ## select top families from popList[["F4"]] to form popList[["F5"]] ##
 
@@ -160,7 +160,7 @@ colnames(Gen) <- "Gen"
 allelesMatF5 <- cbind(Gen, allelesMatF5)
 
 ##set EBV using RF model##
-setEbvRf(pop, EBV, "F5", 5)
+setEbvRf(popList, EBV, "F5", corMatC1, 5)
 
 ## select top popList[["F5"]] families for preliminary yield trial ##
 
@@ -176,7 +176,7 @@ allelesMatPYT <- cbind(Gen, allelesMatPYT)
 
 
 ##set EBV using RF model##
-setEbvRf(pop, EBV, "PYT", 6)
+setEbvRf(popList, EBV, "PYT", corMatC1, 6)
 
 ## select top families from popList[["PYT"]] for popList[["AYT"]] ##
 
@@ -192,7 +192,7 @@ allelesMatAYT <- cbind(Gen, allelesMatAYT)
 
 
 ##set EBV using RF model##
-setEbvRf(pop, EBV, "AYT", 7)
+setEbvRf(popList, EBV, "AYT", corMatC1, 7)
 
 ## select top plants to form variety ##
 VarietySel = selectInd(popList[["AYT"]], 1, use="ebv", top=TRUE)
