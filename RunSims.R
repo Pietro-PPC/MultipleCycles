@@ -40,9 +40,9 @@ for(i in 1:nReps){
   geneticvaluesC2[,i] <- gvMatC2
   geneticvaluesC3[,i] <- gvMatC3
   
-  correlationsC1[,i] <- corMatC1$m
-  correlationsC2[,i] <- corMatC2$m
-  correlationsC3[,i] <- corMatC3$m
+  correlationsC1[,i] <- corMat$C1
+  correlationsC2[,i] <- corMat$C2
+  correlationsC3[,i] <- corMat$C3
   
   variancesC1[,i] <- varMatC1
   variancesC2[,i] <- varMatC2
