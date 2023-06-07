@@ -56,7 +56,6 @@ for(i in 1:nReps){
   bv_ebvC2[[i]] <- bv_ebvC2
   bv_ebvC3[[i]] <- bv_ebvC3
   
-  
   ##create data frames and label##
   geneticvaluesC1 <- as.data.frame(geneticvaluesC1)
   colnames(geneticvaluesC1) <- 1:nReps
@@ -129,7 +128,10 @@ for(i in 1:nReps){
   saveRDS(bv_ebvC2, file="1C2rrblup_rd_bvebv_snp_yield.rds")
   saveRDS(bv_ebvC3, file="1C3rrblup_rd_bvebv_snp_yield.rds")
   
-  
+  i <- i + 1
+  if (i > nReps){ ##break at number of desired reps##
+    break
+  }
   
 }
   
