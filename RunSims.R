@@ -48,9 +48,9 @@ for(i in 1:nReps){
   variancesC2[,i] <- varMatC2
   variancesC3[,i] <- varMatC3
   
-  allelesC1[[i]] <- allelesMatC1
-  allelesC2[[i]] <- allelesMatC2
-  allelesC3[[i]] <- allelesMatC3
+  allelesC1[[i]] <- allelesMat$C1
+  allelesC2[[i]] <- allelesMat$C2
+  allelesC3[[i]] <- allelesMat$C3
   
   bv_ebvC1[[i]] <- bv_ebvC1
   bv_ebvC2[[i]] <- bv_ebvC2

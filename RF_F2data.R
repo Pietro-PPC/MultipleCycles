@@ -1,5 +1,5 @@
-TrainingGeno <- pullSegSiteGeno(popList[["F2"]])
-TrainingPheno <- pheno(popList[["F2"]])
+TrainingGeno <- pullSegSiteGeno(popList$F2)
+TrainingPheno <- pheno(popList$F2)
 
 pheno <- as.data.frame(TrainingPheno)
 geno <- as.data.frame(TrainingGeno)
