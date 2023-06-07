@@ -18,7 +18,7 @@ popList <- listenv::listenv()
 EBV <- listenv::listenv()
 
 corMat <- listenv::listenv()
-alellesMat <- listenv::listenv()
+allelesMat <- listenv::listenv()
 
 #Create Results Matrices
 gvMatC1 <- matrix(nrow=10, ncol=1)
