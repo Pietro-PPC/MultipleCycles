@@ -30,7 +30,8 @@ bvebvC3 <- vector("list", length = nReps)
 
 ## Run repeat loop to run reps ##
 
-for(i in 1:nReps){
+
+for (i in 1:nReps){
   source("1CycleOneRF.R") ##Source the SCript for the SCenario you would like to run##
   
   geneticvaluesC1[,i] <- gvMatC1
