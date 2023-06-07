@@ -15,11 +15,7 @@ testingset <- trainingdata[-train_index, ]
 
 ## create cross validation strategy ##
 control <- trainControl(method='repeatedcv', 
-<<<<<<< HEAD
-                        number=5, ##will test 5 different values for mtry (number of variables for splitting) ##
-=======
                         number=3, ##will test 10 different values for mtry (number of variables for splitting) ##
->>>>>>> 51ac71d (reduce number of values for mtry)
                         repeats=1,
                         search = "random")  
 
