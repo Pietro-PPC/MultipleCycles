@@ -22,14 +22,16 @@ control <- trainControl(method='repeatedcv',
 
 ##build model##
 print("training model")
-
+cl <- makePSOCKcluster(15)
+registerDoParallel(cl)
 
 rf_fit = train(ID1 ~ ., 
                data = trainingset, 
                method = "parRF",
                tuneLength = 10,
                trControl=control) ## search a random tuning grid ##
-print("model trained")
 
+print("model trained")
+stopCluster(cl)
 
 ### This command takes about 90 minutes in an compute canada interactive session ###
