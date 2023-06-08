@@ -32,10 +32,14 @@ bv_ebvC3 <- vector("list", length = nReps)
 
 ## Run repeat loop to run reps ##
 
+<<<<<<< HEAD
 for(i in 1:nReps){
+=======
+for (i in 1:nReps){
+>>>>>>> 7d6bd28 (change repeat to for)
   source("1CycleOneRF.R") ##Source the SCript for the SCenario you would like to run##
   
-  
+
   geneticvaluesC1[,i] <- gvMatC1
   geneticvaluesC2[,i] <- gvMatC2
   geneticvaluesC3[,i] <- gvMatC3
@@ -127,11 +131,7 @@ for(i in 1:nReps){
   saveRDS(bv_ebvC1, file="1C1rrblup_rd_bvebv_snp_yield.rds")
   saveRDS(bv_ebvC2, file="1C2rrblup_rd_bvebv_snp_yield.rds")
   saveRDS(bv_ebvC3, file="1C3rrblup_rd_bvebv_snp_yield.rds")
-  
-  i <- i + 1
-  if (i > nReps){ ##break at number of desired reps##
-    break
-  }
+
   
 }
   
