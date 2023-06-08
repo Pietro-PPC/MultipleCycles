@@ -24,17 +24,14 @@ allelesC1 <- vector("list", length = nReps)
 allelesC2 <- vector("list", length = nReps)
 allelesC3 <- vector("list", length = nReps)
 
-bv_ebvC1 <- vector("list", length = nReps)
-bv_ebvC2 <- vector("list", length = nReps)
-bv_ebvC3 <- vector("list", length = nReps)
-
-
+bvebvC1 <- vector("list", length = nReps)
+bvebvC2 <- vector("list", length = nReps)
+bvebvC3 <- vector("list", length = nReps)
 
 ## Run repeat loop to run reps ##
 
 for(i in 1:nReps){
   source("1CycleOneRF.R") ##Source the SCript for the SCenario you would like to run##
-  
   
   geneticvaluesC1[,i] <- gvMatC1
   geneticvaluesC2[,i] <- gvMatC2
@@ -52,86 +49,79 @@ for(i in 1:nReps){
   allelesC2[[i]] <- allelesMatC2
   allelesC3[[i]] <- allelesMatC3
   
-  bv_ebvC1[[i]] <- bv_ebvC1 # this may be a problem
-  bv_ebvC2[[i]] <- bv_ebvC2
-  bv_ebvC3[[i]] <- bv_ebvC3
-  
-<<<<<<< HEAD
-  
-=======
-
->>>>>>> 7e85bef (change repeat to for)
-  ##create data frames and label##
-  geneticvaluesC1 <- as.data.frame(geneticvaluesC1)
-  colnames(geneticvaluesC1) <- 1:nReps
-  C1gain <- as.data.frame(geneticvaluesC1[10,] - geneticvaluesC1[2,])
-  colnames(C1gain) <- 1:nReps
-  AllgeneticvaluesC1 <- as.data.frame(rbind(geneticvaluesC1, C1gain))
-  rownames(AllgeneticvaluesC1) <- c("PrevCycPYT","NewParents","F1","F2","F3","F4","F5","PYT","AYT","Variety","meanGV")
-  colnames(AllgeneticvaluesC1) <- c(1:nReps)
-  
-  geneticvaluesC2 <- as.data.frame(geneticvaluesC2)
-  colnames(geneticvaluesC2) <- 1:nReps
-  C2gain <- as.data.frame(geneticvaluesC2[10,] - geneticvaluesC2[3,])
-  colnames(C2gain) <- 1:nReps
-  AllgeneticvaluesC2 <- as.data.frame(rbind(geneticvaluesC2, C2gain))
-  rownames(AllgeneticvaluesC2) <- c("PrevCycPYT","NewParents","F1","F2","F3","F4","F5","PYT","AYT","Variety","meanGV")
-  colnames(AllgeneticvaluesC2) <- c(1:nReps)
-  
-  geneticvaluesC3 <- as.data.frame(geneticvaluesC3)
-  colnames(geneticvaluesC3) <- 1:nReps
-  C3gain <- as.data.frame(geneticvaluesC3[10,] - geneticvaluesC3[3,])
-  colnames(C3gain) <- 1:nReps
-  AllgeneticvaluesC3 <- as.data.frame(rbind(geneticvaluesC3, C3gain))
-  rownames(AllgeneticvaluesC3) <- c("PrevCycPYT","NewParents","F1","F2","F3","F4","F5","PYT","AYT","Variety","meanGV")
-  colnames(AllgeneticvaluesC3) <- c(1:nReps)
-  
-  correlationsC1 <- as.data.frame(correlationsC1)
-  rownames(correlationsC1) <- c("NewParents","F2","F3","F4","F5","PYT","AYT")
-  colnames(correlationsC1) <- c(1:nReps)
-  
-  correlationsC2 <- as.data.frame(correlationsC2)
-  rownames(correlationsC2) <- c("NewParents","F2","F3","F4","F5","PYT","AYT")
-  colnames(correlationsC2) <- c(1:nReps)
-  
-  correlationsC3 <- as.data.frame(correlationsC3)
-  rownames(correlationsC3) <- c("NewParents","F2","F3","F4","F5","PYT","AYT")
-  colnames(correlationsC3) <- c(1:nReps)
-  
-  variancesC1 <- as.data.frame(variancesC1)
-  colnames(variancesC1) <- c(1:nReps)
-  rownames(variancesC1) <- c("PrevCycPYT", "newParents","F1","F2", "F3","F4", "F5", "PYT","AYT")
-
-  variancesC2 <- as.data.frame(variancesC2)
-  colnames(variancesC2) <- c(1:nReps)
-  rownames(variancesC2) <- c("PrevCycPYT", "newParents","F1","F2", "F3","F4", "F5", "PYT","AYT")
-  
-  variancesC3 <- as.data.frame(variancesC3)
-  colnames(variancesC3) <- c(1:nReps)
-  rownames(variancesC3) <- c("PrevCycPYT", "newParents","F1","F2", "F3","F4", "F5", "PYT","AYT")
-  
-  
-  ##write files
-  write.csv(AllgeneticvaluesC1, "1C1_rrblup_rd_gvs_snp_yield.csv")
-  write.csv(AllgeneticvaluesC2, "1C2_rrblup_rd_gvs_snp_yield.csv")
-  write.csv(AllgeneticvaluesC3, "1C3_rrblup_rd_gvs_snp_yield.csv")
-  
-  
-  write.csv(correlationsC1, "1C1_rrblup_rd_cors_snp_yield.csv")
-  write.csv(correlationsC2, "1C2_rrblup_rd_cors_snp_yield.csv")
-  write.csv(correlationsC3, "1C3_rrblup_rd_cors_snp_yield.csv")
-  
-  write.csv(variancesC1, "1C1_rrblup_rd_vars_snp_yield.csv")
-  write.csv(variancesC2, "1C2_rrblup_rd_vars_snp_yield.csv")
-  write.csv(variancesC3, "1C3_rrblup_rd_vars_snp_yield.csv")
-  
-  saveRDS(allelesC1, file="1C1rrblup_rd_alleles_snp_yield.rds")
-  saveRDS(allelesC2, file="1C2rrblup_rd_alleles_snp_yield.rds")
-  saveRDS(allelesC3, file="1C3rrblup_rd_alleles_snp_yield.rds")
-  
-  saveRDS(bv_ebvC1, file="1C1rrblup_rd_bvebv_snp_yield.rds")
-  saveRDS(bv_ebvC2, file="1C2rrblup_rd_bvebv_snp_yield.rds")
-  saveRDS(bv_ebvC3, file="1C3rrblup_rd_bvebv_snp_yield.rds")
-  
+  bvebvC1[[i]] <- bv_ebvC1
+  bvebvC2[[i]] <- bv_ebvC2
+  bvebvC3[[i]] <- bv_ebvC3  
 }
   
+##create data frames and label##
+geneticvaluesC1 <- as.data.frame(geneticvaluesC1)
+colnames(geneticvaluesC1) <- 1:nReps
+C1gain <- as.data.frame(geneticvaluesC1[10,] - geneticvaluesC1[2,])
+colnames(C1gain) <- 1:nReps
+AllgeneticvaluesC1 <- as.data.frame(rbind(geneticvaluesC1, C1gain))
+rownames(AllgeneticvaluesC1) <- c("PrevCycPYT","NewParents","F1","F2","F3","F4","F5","PYT","AYT","Variety","meanGV")
+colnames(AllgeneticvaluesC1) <- c(1:nReps)
+
+geneticvaluesC2 <- as.data.frame(geneticvaluesC2)
+colnames(geneticvaluesC2) <- 1:nReps
+C2gain <- as.data.frame(geneticvaluesC2[10,] - geneticvaluesC2[3,])
+colnames(C2gain) <- 1:nReps
+AllgeneticvaluesC2 <- as.data.frame(rbind(geneticvaluesC2, C2gain))
+rownames(AllgeneticvaluesC2) <- c("PrevCycPYT","NewParents","F1","F2","F3","F4","F5","PYT","AYT","Variety","meanGV")
+colnames(AllgeneticvaluesC2) <- c(1:nReps)
+
+geneticvaluesC3 <- as.data.frame(geneticvaluesC3)
+colnames(geneticvaluesC3) <- 1:nReps
+C3gain <- as.data.frame(geneticvaluesC3[10,] - geneticvaluesC3[3,])
+colnames(C3gain) <- 1:nReps
+AllgeneticvaluesC3 <- as.data.frame(rbind(geneticvaluesC3, C3gain))
+rownames(AllgeneticvaluesC3) <- c("PrevCycPYT","NewParents","F1","F2","F3","F4","F5","PYT","AYT","Variety","meanGV")
+colnames(AllgeneticvaluesC3) <- c(1:nReps)
+
+correlationsC1 <- as.data.frame(correlationsC1)
+rownames(correlationsC1) <- c("NewParents","F2","F3","F4","F5","PYT","AYT")
+colnames(correlationsC1) <- c(1:nReps)
+
+correlationsC2 <- as.data.frame(correlationsC2)
+rownames(correlationsC2) <- c("NewParents","F2","F3","F4","F5","PYT","AYT")
+colnames(correlationsC2) <- c(1:nReps)
+
+correlationsC3 <- as.data.frame(correlationsC3)
+rownames(correlationsC3) <- c("NewParents","F2","F3","F4","F5","PYT","AYT")
+colnames(correlationsC3) <- c(1:nReps)
+
+variancesC1 <- as.data.frame(variancesC1)
+colnames(variancesC1) <- c(1:nReps)
+rownames(variancesC1) <- c("PrevCycPYT", "newParents","F1","F2", "F3","F4", "F5", "PYT","AYT")
+
+variancesC2 <- as.data.frame(variancesC2)
+colnames(variancesC2) <- c(1:nReps)
+rownames(variancesC2) <- c("PrevCycPYT", "newParents","F1","F2", "F3","F4", "F5", "PYT","AYT")
+
+variancesC3 <- as.data.frame(variancesC3)
+colnames(variancesC3) <- c(1:nReps)
+rownames(variancesC3) <- c("PrevCycPYT", "newParents","F1","F2", "F3","F4", "F5", "PYT","AYT")
+
+
+##write files
+write.csv(AllgeneticvaluesC1, "1C1_rrblup_rd_gvs_snp_yield.csv")
+write.csv(AllgeneticvaluesC2, "1C2_rrblup_rd_gvs_snp_yield.csv")
+write.csv(AllgeneticvaluesC3, "1C3_rrblup_rd_gvs_snp_yield.csv")
+
+
+write.csv(correlationsC1, "1C1_rrblup_rd_cors_snp_yield.csv")
+write.csv(correlationsC2, "1C2_rrblup_rd_cors_snp_yield.csv")
+write.csv(correlationsC3, "1C3_rrblup_rd_cors_snp_yield.csv")
+
+write.csv(variancesC1, "1C1_rrblup_rd_vars_snp_yield.csv")
+write.csv(variancesC2, "1C2_rrblup_rd_vars_snp_yield.csv")
+write.csv(variancesC3, "1C3_rrblup_rd_vars_snp_yield.csv")
+
+saveRDS(allelesC1, file="1C1rrblup_rd_alleles_snp_yield.rds")
+saveRDS(allelesC2, file="1C2rrblup_rd_alleles_snp_yield.rds")
+saveRDS(allelesC3, file="1C3rrblup_rd_alleles_snp_yield.rds")
+
+saveRDS(bvebvC1, file="1C1rrblup_rd_bvebv_snp_yield.rds")
+saveRDS(bvebvC2, file="1C2rrblup_rd_bvebv_snp_yield.rds")
+saveRDS(bvebvC3, file="1C3rrblup_rd_bvebv_snp_yield.rds")
