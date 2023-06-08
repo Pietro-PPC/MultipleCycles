@@ -17,16 +17,16 @@ testingset <- trainingdata[-train_index, ]
 ## create cross validation strategy ##
 control <- trainControl(method='repeatedcv', 
                         number=3, ##will test 10 different values for mtry (number of variables for splitting) ##
-                        repeats=1)
-                        # search = "random")  
+                        repeats=1,
+                        search = "random")
 
 ##build model##
 print("training model")
 cl <- makePSOCKcluster(15)
 registerDoParallel(cl)
 
-rf_fit = train(ID1 ~ ., 
-               data = trainingset, 
+rf_fit = train(ID1 ~ .,
+               data = trainingset,
                method = "parRF",
                tuneLength = 10,
                trControl=control) ## search a random tuning grid ##
