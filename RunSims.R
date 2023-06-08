@@ -32,8 +32,7 @@ bv_ebvC3 <- vector("list", length = nReps)
 
 ## Run repeat loop to run reps ##
 
-i = 1
-repeat{
+for(i in 1:nReps){
   source("1CycleOneRF.R") ##Source the SCript for the SCenario you would like to run##
   
   
@@ -57,28 +56,28 @@ repeat{
   bv_ebvC2[[i]] <- bv_ebvC2
   bv_ebvC3[[i]] <- bv_ebvC3
   
-  i <- i + 1
-  
-  if (i > nReps){ ##break at number of desired reps##
-    break
-  }
-  
   
   ##create data frames and label##
   geneticvaluesC1 <- as.data.frame(geneticvaluesC1)
+  colnames(geneticvaluesC1) <- 1:nReps
   C1gain <- as.data.frame(geneticvaluesC1[10,] - geneticvaluesC1[2,])
+  colnames(C1gain) <- 1:nReps
   AllgeneticvaluesC1 <- as.data.frame(rbind(geneticvaluesC1, C1gain))
   rownames(AllgeneticvaluesC1) <- c("PrevCycPYT","NewParents","F1","F2","F3","F4","F5","PYT","AYT","Variety","meanGV")
   colnames(AllgeneticvaluesC1) <- c(1:nReps)
   
   geneticvaluesC2 <- as.data.frame(geneticvaluesC2)
+  colnames(geneticvaluesC2) <- 1:nReps
   C2gain <- as.data.frame(geneticvaluesC2[10,] - geneticvaluesC2[3,])
+  colnames(C2gain) <- 1:nReps
   AllgeneticvaluesC2 <- as.data.frame(rbind(geneticvaluesC2, C2gain))
   rownames(AllgeneticvaluesC2) <- c("PrevCycPYT","NewParents","F1","F2","F3","F4","F5","PYT","AYT","Variety","meanGV")
   colnames(AllgeneticvaluesC2) <- c(1:nReps)
   
   geneticvaluesC3 <- as.data.frame(geneticvaluesC3)
+  colnames(geneticvaluesC3) <- 1:nReps
   C3gain <- as.data.frame(geneticvaluesC3[10,] - geneticvaluesC3[3,])
+  colnames(C3gain) <- 1:nReps
   AllgeneticvaluesC3 <- as.data.frame(rbind(geneticvaluesC3, C3gain))
   rownames(AllgeneticvaluesC3) <- c("PrevCycPYT","NewParents","F1","F2","F3","F4","F5","PYT","AYT","Variety","meanGV")
   colnames(AllgeneticvaluesC3) <- c(1:nReps)
