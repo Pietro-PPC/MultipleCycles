@@ -52,7 +52,7 @@ for(i in 1:nReps){
   allelesC2[[i]] <- allelesMatC2
   allelesC3[[i]] <- allelesMatC3
   
-  bv_ebvC1[[i]] <- bv_ebvC1
+  bv_ebvC1[[i]] <- bv_ebvC1 # this may be a problem
   bv_ebvC2[[i]] <- bv_ebvC2
   bv_ebvC3[[i]] <- bv_ebvC3
   
