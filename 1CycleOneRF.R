@@ -65,7 +65,8 @@ allelesMatNP <- cbind(Gen, allelesMatNP)
 
 ##start with 200 random crosses
 
-F1 = randCross(newParents, 200) 
+# function may start here
+F1 = randCross(newParents, 200) # changes in c2. in c2 is makeCross(newCycleSelections, crossPlan = cross, nProgeny = 5)
 varMatC1[3,] = varG(F1)
 gvMatC1[3,] <- mean(gv(F1))
 
@@ -76,11 +77,11 @@ allelesMatF1 <- cbind(Gen, allelesMatF1)
 
 ## self and bulk F1 to form F2 ##
 
-F2 = self(F1, nProgeny=10) 
+F2 = self(F1, nProgeny = 10) 
 varMatC1[4,] = varG(F2)
 gvMatC1[4,] <- mean(gv(F2))
 
-source("RF_F2data.R")
+source("RF_F2data.R") # changes in c2. can we source later?
 print("ran RF_F2data.R C1_2")
 
 allelesMatF2 <- pullSegSiteHaplo(F2)
@@ -94,13 +95,14 @@ colnames(M) <- paste("ID",2:(ncol(M)+1),sep="")
 EBVF2 <- as.numeric(predict(rf_fit, M))
 
 F2@ebv <- as.matrix(EBVF2)
-corMatC1[2,] = cor(bv(F2), ebv(F2))
+corMatC1[2,] = cor(bv(F2), ebv(F2)) # changes in c2
+
 
 SelectParents = source("SelectParentsF2.R")
 
 ## select top individuals from F2 bulk  to form F3 ##
 
-TopFamF2 = selectFam(F2, 10, use="pheno", top=TRUE) 
+TopFamF2 = selectFam(F2, 10, use="pheno", top=TRUE) ## changes in c2
 SelectionsF2 = selectWithinFam(TopFamF2, 5, use="ebv", top=TRUE)
 
 F3 = self(SelectionsF2)
@@ -113,9 +115,8 @@ Gen <- as.data.frame(rep("F3", times=nInd(F3)))
 colnames(Gen) <- "Gen"
 allelesMatF3 <- cbind(Gen, allelesMatF3)
 
-
-
 ##set EBV using RF model##
+
 M = as.data.frame(pullSegSiteGeno(F3))
 colnames(M) <- paste("ID",2:(ncol(M)+1),sep="")
 EBVF3 <- as.numeric(predict(rf_fit, M))
@@ -158,6 +159,9 @@ Gen <- as.data.frame(rep("F5", times=nInd(F5)))
 colnames(Gen) <- "Gen"
 allelesMatF5 <- cbind(Gen, allelesMatF5)
 
+
+
+
 ##set EBV using RF model##
 M = as.data.frame(pullSegSiteGeno(F5))
 colnames(M) <- paste("ID",2:(ncol(M)+1),sep="")
@@ -178,13 +182,10 @@ Gen <- as.data.frame(rep("PYT", times=nInd(PYT)))
 colnames(Gen) <- "Gen"
 allelesMatPYT <- cbind(Gen, allelesMatPYT)
 
-
-
 ##set EBV using RF model##
 M = as.data.frame(pullSegSiteGeno(PYT))
 colnames(M) <- paste("ID",2:(ncol(M)+1),sep="")
 EBVPYT <- as.numeric(predict(rf_fit, M))
-
 
 PYT@ebv <- as.matrix(EBVPYT)
 corMatC1[6,] = cor(bv(PYT),ebv(PYT))
@@ -201,13 +202,10 @@ Gen <- as.data.frame(rep("AYT", times=nInd(AYT)))
 colnames(Gen) <- "Gen"
 allelesMatAYT <- cbind(Gen, allelesMatAYT)
 
-
-
 ##set EBV using RF model##
 M = as.data.frame(pullSegSiteGeno(AYT))
 colnames(M) <- paste("ID",2:(ncol(M)+1),sep="")
 EBVAYT <- as.numeric(predict(rf_fit, M))
-
 
 AYT@ebv <- as.matrix(EBVAYT)
 corMatC1[7,] = cor(bv(AYT),ebv(AYT))
@@ -223,7 +221,6 @@ colnames(Gen) <- "Gen"
 allelesMatVar <- cbind(Gen, allelesMatVar)
 
 allelesMatC1 <- rbind(allelesMatNP, allelesMatF1, allelesMatF2, allelesMatF3, allelesMatF4, allelesMatF5, allelesMatPYT, allelesMatAYT, allelesMatVar)
-
 
 ###collect bvs and ebvs###
 
@@ -267,7 +264,6 @@ bv_ebvC1 <- rbind(bvebv,bvebv1,bvebv2,bvebv3,bvebv4,bvebv5,bvebv6)
 
 
 #write files - naming convention: "model_trainingSet_descriptor_populationType_trait.csv"
-
 
 
 source("1CycleTwo_RF.R")

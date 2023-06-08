@@ -4,6 +4,7 @@ varMatC2 <- matrix(nrow=9, ncol=1)
 
 corMatC2[1] = cor(bv(newCycleSelections), ebv(newCycleSelections))
 
+## function may start here
 F1 = makeCross(newCycleSelections, crossPlan = cross, nProgeny = 5)
 varMatC2[3,] = varG(F1)
 gvMatC2[3,] <- mean(gv(F1))
@@ -31,17 +32,15 @@ M = as.data.frame(pullSegSiteGeno(F2))
 colnames(M) <- paste("ID",2:(ncol(M)+1),sep="")
 EBVF2 <- as.numeric(predict(rf_fit, M))
 
-
 F2@ebv <- as.matrix(EBVF2)
 corMatC2[2] = cor(bv(F2), ebv(F2))
-
 
 rm(newCycleSelections)
 source("SelectParentsF2.R")
 
 ## select top individuals from F2 bulk  to form F3 ##
 
-TopFamF2 = selectFam(F2, 10, use="ebv", top=TRUE) 
+TopFamF2 = selectFam(F2, 10, use="ebv", top=TRUE)
 SelectionsF2 = selectWithinFam(TopFamF2, 5, use="ebv", top=TRUE)
 
 F3 = self(SelectionsF2)
@@ -54,13 +53,11 @@ Gen <- as.data.frame(rep("F3", times=nInd(F3)))
 colnames(Gen) <- "Gen"
 allelesMatF3 <- cbind(Gen, allelesMatF3)
 
-
 #set EBV using RF model
 
 M = as.data.frame(pullSegSiteGeno(F3))
 colnames(M) <- paste("ID",2:(ncol(M)+1),sep="")
 EBVF3 <- as.numeric(predict(rf_fit, M))
-
 
 F3@ebv <- as.matrix(EBVF3)
 corMatC2[3,] = cor(bv(F3),ebv(F3))
@@ -79,7 +76,6 @@ allelesMatF4 <- pullSegSiteHaplo(F4)
 Gen <- as.data.frame(rep("F4", times=nInd(F4)))
 colnames(Gen) <- "Gen"
 allelesMatF4 <- cbind(Gen, allelesMatF4)
-
 
 ##set EBV using BLUP model##
 M = as.data.frame(pullSegSiteGeno(F4))
@@ -205,9 +201,7 @@ colnames(bvebv6) <- c("Gen","bv","ebv")
 bv_ebvC2 <- rbind(bvebv,bvebv1,bvebv2,bvebv3,bvebv4,bvebv5,bvebv6)
 
 
-
 #write files - naming convention: "model_trainingSet_descriptor_populationType_trait.csv"
-
 
 
 source("1CycleThree_RF.R")
