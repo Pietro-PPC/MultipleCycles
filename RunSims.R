@@ -32,11 +32,7 @@ bv_ebvC3 <- vector("list", length = nReps)
 
 ## Run repeat loop to run reps ##
 
-<<<<<<< HEAD
-for(i in 1:nReps){
-=======
 for (i in 1:nReps){
->>>>>>> 7d6bd28 (change repeat to for)
   source("1CycleOneRF.R") ##Source the SCript for the SCenario you would like to run##
   
 
