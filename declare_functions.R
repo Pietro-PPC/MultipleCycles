@@ -24,7 +24,7 @@ getBvebv <- function(bvebv, key, popList, pop_name){
 }
 
 # Adds alleles matrix data for population pop_name
-setAllelesMat <- function(mat, pop_name, popList){
+setAllelesMat <- function(allelesMat, pop_name, popList){
     allelesMat[[pop_name]] <- pullSegSiteHaplo(popList[[pop_name]])
     Gen <- as.data.frame(rep(pop_name, times=nInd(popList[[pop_name]])))
     colnames(Gen) <- "Gen"
