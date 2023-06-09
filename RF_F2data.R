@@ -21,9 +21,10 @@ control <- trainControl(method='repeatedcv',
                         search = "random")
 
 ##build model##
-print("training model")
 cl <- makePSOCKcluster(15)
+print('started cluster')
 registerDoParallel(cl)
+print('registered cluster')
 
 rf_fit = train(ID1 ~ .,
                data = trainingset,
@@ -31,7 +32,8 @@ rf_fit = train(ID1 ~ .,
                tuneLength = 10,
                trControl=control) ## search a random tuning grid ##
 
-print("model trained")
+print('Ran in parallel')
 stopCluster(cl)
+print('Closed cluster')
 
 ### This command takes about 90 minutes in an compute canada interactive session ###
