@@ -95,7 +95,7 @@ colnames(M) <- paste("ID",2:(ncol(M)+1),sep="")
 EBVF2 <- as.numeric(predict(rf_fit, M))
 
 F2@ebv <- as.matrix(EBVF2)
-corMatC1[2,] = cor(bv(F2), ebv(F2)) # changes in c2
+corMatC1[2,] = cor(bv(F2), ebv(F2))
 
 
 SelectParents = source("SelectParentsF2.R")

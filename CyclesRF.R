@@ -59,11 +59,11 @@ colnames(M) <- paste("ID",2:(ncol(M)+1),sep="")
 EBVF2 <- as.numeric(predict(rf_fit, M))
 
 F2@ebv <- as.matrix(EBVF2)
-corMat[["C1"]][1,] = cor(bv(F2), ebv(F2))
+corMat$C1[1,] = cor(bv(F2), ebv(F2))
 
 newParents = selectInd(F2, 10, use="ebv", top=TRUE)
-varMat[["C1"]][2,] = varG(newParents)
-gvMat[["C1"]][2,] <- mean(gv(newParents))
+varMat$C1[2,] = varG(newParents)
+gvMat$C1[2,] <- mean(gv(newParents))
 
 allelesMatNP <- pullSegSiteHaplo(newParents)
 Gen <- as.data.frame(rep("NP", times=nInd(newParents)))
@@ -76,11 +76,11 @@ allelesMatNP <- cbind(Gen, allelesMatNP)
 
 # function may start here
 
-runCycle <- function(cycle){
+for (cycle in c("C1", "C2", "C3")){
     if (cycle == "C1")
-        F1 = randCross(newParents, 200) # changes in c2
+        F1 = randCross(newParents, 200)
     else{
-        corMat[[cycle]][1] = cor(bv(newCycleSelections), ebv(newCycleSelections))
+        corMat[[cycle]][1,] = cor(bv(newCycleSelections), ebv(newCycleSelections))
         F1 = makeCross(newCycleSelections, crossPlan = cross, nProgeny = 5)
     }
         
@@ -112,17 +112,15 @@ runCycle <- function(cycle){
     EBVF2 <- as.numeric(predict(rf_fit, M))
 
     F2@ebv <- as.matrix(EBVF2)
-    if (cycle == "C1")
-        corMat[[cycle]][2,] = cor(bv(F2), ebv(F2)) # changes in c2
-    else
-        corMat[[cycle]][2] = cor(bv(F2), ebv(F2))
+    corMat[[cycle]][2,] = cor(bv(F2), ebv(F2))
 
-
-    if (cycle != "C1"){
-        rm(newCycleSelections)
+    if (cycle == "C1"){
+        SelectParents = source("SelectParentsF2.R") # TODO: do we need the variable?
+    }
+    else{
+        rm(newCycleSelections) 
         source("SelectParentsF2.R")
-    } else
-        SelectParents = source("SelectParentsF2.R")
+    }
 
     ## select top individuals from F2 bulk  to form F3 ##
 
