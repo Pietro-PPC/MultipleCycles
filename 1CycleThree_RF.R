@@ -202,7 +202,7 @@ bvebv6 <- cbind(Gen, bvebv6)
 colnames(bvebv6) <- c("Gen","bv","ebv")
 
 
-bv_ebvC2 <- rbind(bvebv,bvebv1,bvebv2,bvebv3,bvebv4,bvebv5,bvebv6)
+bv_ebvC3 <- rbind(bvebv,bvebv1,bvebv2,bvebv3,bvebv4,bvebv5,bvebv6)
 
 
 
