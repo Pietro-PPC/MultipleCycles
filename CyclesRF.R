@@ -24,60 +24,61 @@ for (cycle in c("C1", "C2", "C3")){
     varMat[[cycle]] <- matrix(nrow=9, ncol=1)
 }
 
-#establish simulation parameters
-genMap <- readRDS("genMapSNPs.RData")
-haplotypes <- readRDS("haplotypesSNPs.RData")
-
-founderPop = newMapPop(genMap, 
-                       haplotypes, 
-                       inbred = FALSE, 
-                       ploidy = 2L)
-
-SP <- SimParam$new(founderPop)
-SP$addTraitAEG(10, mean=8.8)
-SP$setVarE(h2=0.25)
-
-#INITIAL TRAINING POP
-
-## randomly cross 200 parents 
-Parents = newPop(founderPop)
-TopParents = selectInd(Parents, 10, top=TRUE)
-
-F1 = randCross(TopParents, 200, nProgeny=3)
-
-## self and bulk F1 to form F2 ##
-
-F2 = self(F1)
-F2 = setPheno(F2)
-
-source("RF_F2data.R")
-print("ran RF_F2data.R C1_1")
-
-##set EBV using RF model##
-M = as.data.frame(pullSegSiteGeno(F2))
-colnames(M) <- paste("ID",2:(ncol(M)+1),sep="")
-EBVF2 <- as.numeric(predict(rf_fit, M))
-
-F2@ebv <- as.matrix(EBVF2)
-corMat$C1[1,] = cor(bv(F2), ebv(F2))
-
-newParents = selectInd(F2, 10, use="ebv", top=TRUE)
-varMat$C1[2,] = varG(newParents)
-gvMat$C1[2,] <- mean(gv(newParents))
-
-allelesMatNP <- pullSegSiteHaplo(newParents)
-Gen <- as.data.frame(rep("NP", times=nInd(newParents)))
-colnames(Gen) <- "Gen"
-allelesMatNP <- cbind(Gen, allelesMatNP)
-
-#start new cycle
-
-##start with 200 random crosses
 
 # function may start here
 
 for (cycle in c("C1", "C2", "C3")){
     if (cycle == "C1")
+        #establish simulation parameters
+        genMap <- readRDS("genMapSNPs.RData")
+        haplotypes <- readRDS("haplotypesSNPs.RData")
+
+        founderPop = newMapPop(genMap, 
+                            haplotypes, 
+                            inbred = FALSE, 
+                            ploidy = 2L)
+
+        SP <- SimParam$new(founderPop)
+        SP$addTraitAEG(10, mean=8.8)
+        SP$setVarE(h2=0.25)
+
+        #INITIAL TRAINING POP
+
+        ## randomly cross 200 parents 
+        Parents = newPop(founderPop)
+        TopParents = selectInd(Parents, 10, top=TRUE)
+
+        F1 = randCross(TopParents, 200, nProgeny=3)
+
+        ## self and bulk F1 to form F2 ##
+
+        F2 = self(F1)
+        F2 = setPheno(F2)
+
+        source("RF_F2data.R")
+        print("ran RF_F2data.R C1_1")
+
+        ##set EBV using RF model##
+        M = as.data.frame(pullSegSiteGeno(F2))
+        colnames(M) <- paste("ID",2:(ncol(M)+1),sep="")
+        EBVF2 <- as.numeric(predict(rf_fit, M))
+
+        F2@ebv <- as.matrix(EBVF2)
+        corMat$C1[1,] = cor(bv(F2), ebv(F2))
+
+        newParents = selectInd(F2, 10, use="ebv", top=TRUE)
+        varMat$C1[2,] = varG(newParents)
+        gvMat$C1[2,] <- mean(gv(newParents))
+
+        allelesMatNP <- pullSegSiteHaplo(newParents)
+        Gen <- as.data.frame(rep("NP", times=nInd(newParents)))
+        colnames(Gen) <- "Gen"
+        allelesMatNP <- cbind(Gen, allelesMatNP)
+
+        #start new cycle
+
+        ##start with 200 random crosses
+
         F1 = randCross(newParents, 200)
     else{
         corMat[[cycle]][1,] = cor(bv(newCycleSelections), ebv(newCycleSelections))
