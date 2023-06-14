@@ -35,7 +35,7 @@ EBVF2 <- as.numeric(predict(rf_fit, M))
 F2@ebv <- as.matrix(EBVF2)
 corMatC2[2] = cor(bv(F2), ebv(F2))
 
-rm(newCycleSelections)
+rm(newCycleSelections) # Do we need to remove it? It's overwritten inside selectParents
 source("SelectParentsF2.R")
 
 ## select top individuals from F2 bulk  to form F3 ##

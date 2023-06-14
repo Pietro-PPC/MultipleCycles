@@ -24,7 +24,7 @@ founderPop = newMapPop(genMap,
                        inbred = FALSE, 
                        ploidy = 2L)
 
-SP <- SimParam$new(founderPop)
+SP <- SimParam$new(founderPop) # PI: Has option to parallelize (not necessary for now)
 SP$addTraitAEG(10, mean=8.8)
 SP$setVarE(h2=0.25)
 
@@ -34,7 +34,7 @@ SP$setVarE(h2=0.25)
 Parents = newPop(founderPop)
 TopParents = selectInd(Parents, 10, top=TRUE)
 
-F1 = randCross(TopParents, 200, nProgeny=3)
+F1 = randCross(TopParents, 200, nProgeny=3) 
 
 ## self and bulk F1 to form F2 ##
 
@@ -81,7 +81,7 @@ F2 = self(F1, nProgeny = 10)
 varMatC1[4,] = varG(F2)
 gvMatC1[4,] <- mean(gv(F2))
 
-source("RF_F2data.R") # changes in c2. can we source later?
+source("RF_F2data.R") # PI: changes in c2. can we source later?
 print("ran RF_F2data.R C1_2")
 
 allelesMatF2 <- pullSegSiteHaplo(F2)
@@ -98,7 +98,7 @@ F2@ebv <- as.matrix(EBVF2)
 corMatC1[2,] = cor(bv(F2), ebv(F2))
 
 
-SelectParents = source("SelectParentsF2.R")
+SelectParents = source("SelectParentsF2.R") # PI: do we need the variable?
 
 ## select top individuals from F2 bulk  to form F3 ##
 
